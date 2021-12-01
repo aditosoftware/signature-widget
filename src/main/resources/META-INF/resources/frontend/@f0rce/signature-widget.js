@@ -6,7 +6,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import { LitElement, html, css } from "lit-element";
+import {css, html, LitElement} from "lit-element";
 
 import SignaturePad from "signature_pad";
 
@@ -80,6 +80,16 @@ class LitSignaturePad extends LitElement {
       });
     });
 
+    let intersectionObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting)
+        {
+          self.resizeSignature();
+        }
+      });
+    });
+
+    intersectionObserver.observe(this.signatureCanvas);
     this.initSignaturePad();
   }
 
@@ -212,7 +222,7 @@ class LitSignaturePad extends LitElement {
   resizeSignature() {
     var ratio = Math.max(window.devicePixelRatio || 1, 1);
     this.signatureCanvas.width = this.signatureCanvas.offsetWidth * ratio;
-    this.signatureCanvas.height = this.signatureCanvasa.offsetHeight * ratio;
+    this.signatureCanvas.height = this.signatureCanvas.offsetHeight * ratio;
     this.signatureCanvas.getContext("2d").scale(ratio, ratio);
   }
 }

@@ -1,13 +1,10 @@
 package de.f0rce.signaturepad;
 
+import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.dependency.*;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasSize;
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.dependency.NpmPackage;
 
 /**
  * Main class with all methods.
@@ -16,7 +13,7 @@ import com.vaadin.flow.component.dependency.NpmPackage;
  */
 @Tag("lit-signature-pad")
 @JsModule("./@f0rce/signature-widget.js")
-@NpmPackage(value = "signature_pad", version = "3.0.0-beta.4")
+@NpmPackage(value = "signature_pad", version = "4.0.0")
 public class SignaturePad extends Component implements HasSize {
 
 	private double dotSize;

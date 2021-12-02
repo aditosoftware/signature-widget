@@ -13,7 +13,7 @@ import java.util.Base64;
  */
 @Tag("lit-signature-pad")
 @JsModule("./@f0rce/signature-widget.js")
-@NpmPackage(value = "signature_pad", version = "4.0.0")
+@NpmPackage(value = "signature_pad", version = "3.0.0-beta.4")
 public class SignaturePad extends Component implements HasSize {
 
 	private double dotSize;

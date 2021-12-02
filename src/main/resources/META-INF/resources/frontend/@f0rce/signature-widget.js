@@ -220,10 +220,12 @@ class LitSignaturePad extends LitElement {
   }
 
   resizeSignature() {
+    var data = this.signaturePad.toDataURL();
     var ratio = Math.max(window.devicePixelRatio || 1, 1);
     this.signatureCanvas.width = this.signatureCanvas.offsetWidth * ratio;
     this.signatureCanvas.height = this.signatureCanvas.offsetHeight * ratio;
     this.signatureCanvas.getContext("2d").scale(ratio, ratio);
+    this.signaturePad.fromDataURL(data);
   }
 }
 

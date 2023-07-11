@@ -3,16 +3,15 @@ package de.f0rce.signaturepad;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasSize;
-import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
+import com.vaadin.flow.shared.Registration;
 
 /** @author David "F0rce" Dodlek */
 @Tag("lit-signature-pad")
 @JsModule("./@f0rce/signature-widget.js")
-@NpmPackage(value = "signature_pad", version = "4.0.4")
+@NpmPackage(value = "signature_pad", version = "4.1.5")
 public class SignaturePad extends Component implements HasSize {
 
   private double dotSize;
@@ -34,6 +33,11 @@ public class SignaturePad extends Component implements HasSize {
     super.addListener(ImageEncode.class, this::updateImage);
     this.setHeight("100px");
     this.setWidth("300px");
+  }
+
+  public Registration addUpdateListener(ComponentEventListener<ImageChanged> listener)
+  {
+    return super.addListener(ImageChanged.class, listener);
   }
 
   // Used to sync the private variables (called after the frontend event has been

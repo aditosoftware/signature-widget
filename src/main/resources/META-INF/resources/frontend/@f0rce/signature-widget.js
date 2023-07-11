@@ -116,15 +116,21 @@ class LitSignaturePad extends LitElement {
 
     this.signaturePad.addEventListener("endStroke", () => {
       this.encodeImage();
+      this.imageChanged();
     });
 
     this.signaturePad.clear();
+
+    if (this.img) {
+      this.signaturePad.fromDataURL(this.img);
+    }
   }
 
   clear() {
     if (!this.signaturePad) return;
     this.signaturePad.clear();
     this.encodeImage();
+    this.imageChanged();
   }
 
   undo() {
@@ -141,13 +147,40 @@ class LitSignaturePad extends LitElement {
     if (!this.signaturePad) return;
     var uri = this.signaturePad.toDataURL(this.type, this.encodingOptions);
     this.dispatchEvent(
-      new CustomEvent("image-encode", {
-        detail: {
-          image: uri,
-          type: this.type,
-          isEmpty: this.signaturePad.isEmpty(),
-        },
-      })
+        new CustomEvent("image-encode", {
+          detail: {
+            image: uri,
+            type: this.type,
+            isEmpty: this.signaturePad.isEmpty(),
+          },
+        })
+    );
+  }
+
+  setImage(base64) {
+    this.img = base64;
+    if(base64)
+      this.signaturePad.fromDataURL(base64);
+    else
+      this.clear();
+  }
+
+  imageChanged() {
+    if(!this.signaturePad) return;
+
+    var uri = undefined;
+
+    if(!this.signaturePad.isEmpty())
+      uri = this.signaturePad.toDataURL(this.type, this.encodingOptions);
+
+    this.dispatchEvent(
+        new CustomEvent("image-changed", {
+          detail: {
+            image: uri,
+            type: this.type,
+            isEmpty: this.signaturePad.isEmpty(),
+          },
+        })
     );
   }
 

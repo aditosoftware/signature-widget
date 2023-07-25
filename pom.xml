@@ -5,12 +5,12 @@
   <groupId>de.f0rce.signaturepad</groupId>
   <artifactId>signature-widget</artifactId>
 
-  <version>4.1.6.adito</version>
+  <version>4.1.7.adito</version>
   <name>signature-widget</name>
   <description>Lit-Element Wrapper around Signature Pad (https://github.com/szimek/signature_pad) for Vaadin 14+</description>
 
   <properties>
-    <vaadin.version>20.0.6</vaadin.version>
+    <vaadin.version>23.3.16</vaadin.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -148,7 +148,6 @@
   </dependencies>
 
   <build>
-    <defaultGoal>jetty:run</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -158,13 +157,18 @@
           <archive>
             <index>true</index>
             <manifest>
-              <addClasspath>true</addClasspath>
+              <addClasspath>false</addClasspath>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
             <manifestEntries>
               <Vaadin-Package-Version>1</Vaadin-Package-Version>
             </manifestEntries>
           </archive>
+          <excludes>
+            <exclude>
+              META-INF/VAADIN/config/flow-build-info.json
+            </exclude>
+          </excludes>
         </configuration>
       </plugin>
       <plugin>
@@ -201,25 +205,6 @@
       <id>directory</id>
       <build>
         <plugins>
-          <!--          <plugin>-->
-          <!--            <groupId>org.apache.maven.plugins</groupId>-->
-          <!--            <artifactId>maven-assembly-plugin</artifactId>-->
-          <!--            <version>3.1.1</version>-->
-          <!--            <configuration>-->
-          <!--              <appendAssemblyId>false</appendAssemblyId>-->
-          <!--              <descriptors>-->
-          <!--                <descriptor>assembly/assembly.xml</descriptor>-->
-          <!--              </descriptors>-->
-          <!--            </configuration>-->
-          <!--            <executions>-->
-          <!--              <execution>-->
-          <!--                <goals>-->
-          <!--                  <goal>single</goal>-->
-          <!--                </goals>-->
-          <!--                <phase>install</phase>-->
-          <!--              </execution>-->
-          <!--            </executions>-->
-          <!--          </plugin>-->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
@@ -230,36 +215,6 @@
                 <exclude>META-INF/VAADIN/config/flow-build-info.json</exclude>
               </excludes>
             </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <!-- Run (demo) in production mode-->
-    <profile>
-      <id>production</id>
-      <properties>
-        <vaadin.productionMode>true</vaadin.productionMode>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>com.vaadin</groupId>
-          <artifactId>flow-server-production-mode</artifactId>
-        </dependency>
-      </dependencies>
-
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>build-frontend</goal>
-                </goals>
-              </execution>
-            </executions>
           </plugin>
         </plugins>
       </build>
